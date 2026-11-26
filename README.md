@@ -15,7 +15,7 @@ npm run dev          # http://localhost:5173  (API /api/* chạy luôn trong dev
 ```
 
 - Trang người dùng: `http://localhost:5173/`
-- Trang quản trị: `http://localhost:5173/admin` — khi chạy local, mật khẩu mặc định là **`admin123`** (chỉ có hiệu lực local; khi deploy bắt buộc đặt mật khẩu riêng).
+- Trang quản trị: `/admin` (vd. `https://nophotoshop.vercel.app/admin`). Mật khẩu mặc định là mật khẩu chủ app đã chọn (lưu dạng băm bcrypt trong `api/_lib/auth.ts`). Muốn đổi: chạy `node scripts/hash-password.mjs "mật-khẩu-mới"` rồi đặt biến `ADMIN_PASSWORD_HASH` trên Vercel.
 - Dữ liệu admin khi chạy local lưu ở `.data/store.json`.
 
 Lệnh khác:
