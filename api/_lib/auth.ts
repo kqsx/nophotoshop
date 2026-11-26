@@ -8,23 +8,25 @@ const SESSION_HOURS = 12;
 const MAX_FAILS = 5;
 const LOCK_SECONDS = 15 * 60;
 
-const isProd = () => !!process.env.VERCEL || process.env.NODE_ENV === 'production';
 
-let devSecret: string | null = null;
+let fallbackSecret: string | null = null;
+/**
+ * Khóa ký cookie: ưu tiên SESSION_SECRET; nếu chưa đặt thì dùng khóa dẫn xuất từ token KV
+ * (bí mật, ổn định giữa các lần chạy); nếu không có cả hai thì sinh ngẫu nhiên theo phiên máy chủ
+ * (vẫn đăng nhập được, chỉ bị đăng xuất khi máy chủ khởi động lại).
+ */
 function secret(): string {
   if (process.env.SESSION_SECRET) return process.env.SESSION_SECRET;
-  if (isProd()) throw new HttpError(503, 'Chưa cấu hình SESSION_SECRET trên máy chủ');
-  devSecret ??= randomBytes(32).toString('hex');
-  return devSecret;
+  const kv = process.env.KV_REST_API_TOKEN || process.env.UPSTASH_REDIS_REST_TOKEN;
+  if (kv) return createHmac('sha256', 'nps-session').update(kv).digest('hex');
+  fallbackSecret ??= randomBytes(32).toString('hex');
+  return fallbackSecret;
 }
 
-/** Mật khẩu mặc định chỉ dùng khi chạy local: admin123 */
-const DEV_HASH = '$2b$10$Ac42HQY0/AYccZ6Wm.DqjOf4tl0aZ1sTJrfwpf4DgKAGqwDL5keWy';
+/** Mật khẩu admin mặc định (chỉ lưu dạng băm bcrypt). Đặt ADMIN_PASSWORD_HASH trên Vercel để đổi. */
+const DEFAULT_HASH = '$2b$12$hY321ew8TFp8hOIl3IdPi.Pat6ncSCjt31Ci/4mGKK.6fUxJEWERG';
 function passwordHash(): string {
-  const h = process.env.ADMIN_PASSWORD_HASH;
-  if (h) return h;
-  if (isProd()) throw new HttpError(503, 'Chưa cấu hình ADMIN_PASSWORD_HASH trên máy chủ');
-  return DEV_HASH;
+  return process.env.ADMIN_PASSWORD_HASH || DEFAULT_HASH;
 }
 
 const b64u = (b: Buffer | string) => Buffer.from(b).toString('base64url');
