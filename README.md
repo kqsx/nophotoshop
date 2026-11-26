@@ -38,7 +38,7 @@ Lệnh khác:
    - Tùy chọn: `ADMIN_TOTP_SECRET` (bật 2FA bằng Google Authenticator), `RETENTION_LOGS_DAYS`, `RETENTION_STATS_MONTHS`, `STORAGE_LIMIT_BYTES`.
 5. Deploy lại. Sửa `public/sitemap.xml` thay `YOUR-DOMAIN` bằng tên miền thật.
 
-`vercel.json` đã có: header bảo mật (CSP, nosniff, Referrer-Policy, Permissions-Policy, HSTS), cache 1 năm cho file có hash, rewrite SPA, `noindex` cho `/admin`, **Cron 3h sáng hằng ngày** gọi `/api/admin/cleanup?cron=1` để tự dọn dữ liệu.
+`vercel.json` đã có: header bảo mật (CSP, nosniff, Referrer-Policy, Permissions-Policy, HSTS), cache 1 năm cho file có hash, rewrite SPA, `noindex` cho `/admin`, **Cron 3h sáng hằng ngày** gọi `/api/admin/cleanup` (cần đặt biến `CRON_SECRET`) để tự dọn dữ liệu.
 
 ## 3. Chức năng đã có
 

@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "description": "NoPhotoShop By DucAnh — chỉnh ảnh 1 chạm ngay trên trình duyệt",
   "type": "module",
+  "engines": { "node": ">=20.19" },
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
