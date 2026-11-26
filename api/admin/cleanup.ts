@@ -99,8 +99,9 @@ const PREFIX_USAGE: [string, string][] = [['LUT', 'lut:'], ['Thống kê', PREFI
 
 export const GET = handle(async (req) => {
   const url = new URL(req.url);
-  if (url.searchParams.get('cron') === '1') {
-    const auth = req.headers.get('authorization');
+  const auth = req.headers.get('authorization');
+  // Vercel Cron gọi GET kèm "Authorization: Bearer <CRON_SECRET>"
+  if (url.searchParams.get('cron') === '1' || (auth?.startsWith('Bearer ') && !!process.env.CRON_SECRET)) {
     if (!process.env.CRON_SECRET || auth !== `Bearer ${process.env.CRON_SECRET}`) return error(401, 'Sai CRON_SECRET');
     const res = await autoClean(await getRetention());
     await audit(null, 'auto-cleanup', res);

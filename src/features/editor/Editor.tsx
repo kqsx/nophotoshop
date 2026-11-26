@@ -13,7 +13,6 @@ import { Modal } from '../../ui/Modal';
 import { addFiles, blankEdit, closeAll, edit, resetAll, jumpTo, redo, removeDoc, setActive, setSyncAll, setTab, undo, useStore, type Doc, type Tab } from './store';
 import { Switch } from '../../ui/Modal';
 import { getBlur } from './runtime';
-import { WizardPanel, wizardEnabled } from './Wizard';
 import { toast } from '../../ui/toast';
 import { orientationOf } from '../../analysis/aspect';
 import type { PreviewPipeline } from '../../engine/pipeline';
@@ -43,7 +42,6 @@ export function Editor() {
   const [tapMode, setTapMode] = useState<'heal' | 'wb' | null>(null);
   const [healSize, setHealSize] = useState(18);
   const [sheetOpen, setSheetOpen] = useState(true);
-  const [wizard, setWizard] = useState(wizardEnabled());
   const pipe = useRef<PreviewPipeline | null>(null);
   const fileRef = useRef<HTMLInputElement>(null);
 
@@ -162,8 +160,7 @@ export function Editor() {
           <input ref={fileRef} type="file" accept="image/*,.heic,.heif" multiple hidden onChange={(e) => { if (e.target.files) addFiles(e.target.files, (m) => toast(m, 'err')); e.target.value = ''; }} />
         </div>
 
-        {wizard && <WizardPanel doc={doc} onExit={() => setWizard(false)} onExport={() => setExporting(true)} onAdd={() => fileRef.current?.click()} render={panel} />}
-        {!wizard && (
+        {(
           <aside className={'ed-panel glass' + (sheetOpen ? ' open' : '')}>
             <button className="sheet-grab show-sm" onClick={() => setSheetOpen(!sheetOpen)} aria-label={sheetOpen ? 'Thu gọn công cụ' : 'Mở công cụ'}>
               <span className="grabber" />{sheetOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
