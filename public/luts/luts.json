@@ -1,0 +1,77 @@
+{
+  "version": 1,
+  "luts": [
+    {
+      "id": "phim-am",
+      "name": "Phim ấm",
+      "group": "Phim",
+      "kind": "cube",
+      "url": "/luts/phim-am.cube",
+      "size": 17,
+      "order": 0
+    },
+    {
+      "id": "dien-anh",
+      "name": "Xanh cam điện ảnh",
+      "group": "Điện ảnh",
+      "kind": "cube",
+      "url": "/luts/dien-anh.cube",
+      "size": 17,
+      "order": 1
+    },
+    {
+      "id": "hoai-co",
+      "name": "Hoài cổ",
+      "group": "Phim",
+      "kind": "cube",
+      "url": "/luts/hoai-co.cube",
+      "size": 17,
+      "order": 2
+    },
+    {
+      "id": "lanh-mo",
+      "name": "Lạnh mờ",
+      "group": "Phim",
+      "kind": "cube",
+      "url": "/luts/lanh-mo.cube",
+      "size": 17,
+      "order": 3
+    },
+    {
+      "id": "nang-vang",
+      "name": "Nắng vàng",
+      "group": "Màu nổi",
+      "kind": "cube",
+      "url": "/luts/nang-vang.cube",
+      "size": 17,
+      "order": 4
+    },
+    {
+      "id": "han-quoc",
+      "name": "Trong veo Hàn Quốc",
+      "group": "Da",
+      "kind": "cube",
+      "url": "/luts/han-quoc.cube",
+      "size": 17,
+      "order": 5
+    },
+    {
+      "id": "den-trang",
+      "name": "Đen trắng tương phản",
+      "group": "Đen trắng",
+      "kind": "cube",
+      "url": "/luts/den-trang.cube",
+      "size": 17,
+      "order": 6
+    },
+    {
+      "id": "dem-neon",
+      "name": "Đêm neon",
+      "group": "Ban đêm",
+      "kind": "cube",
+      "url": "/luts/dem-neon.cube",
+      "size": 17,
+      "order": 7
+    }
+  ]
+}
