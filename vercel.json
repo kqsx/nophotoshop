@@ -4,9 +4,9 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "rewrites": [
-    { "source": "/((?!api/|assets/|icons/|luts/|models/|.*\\..*).*)", "destination": "/index.html" }
+    { "source": "/((?!api/).*)", "destination": "/index.html" }
   ],
-  "crons": [{ "path": "/api/admin/cleanup?cron=1", "schedule": "0 3 * * *" }],
+  "crons": [{ "path": "/api/admin/cleanup", "schedule": "0 3 * * *" }],
   "headers": [
     {
       "source": "/(.*)",
