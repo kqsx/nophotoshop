@@ -104,7 +104,7 @@ export function ShareBlock() {
         <a className="btn ghost" href={`https://zalo.me/${cfg.phone}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} strokeWidth={1.75} /> Zalo</a>
         <a className="btn ghost" href={`tel:${cfg.phone}`}><Phone size={20} strokeWidth={1.75} /> {cfg.phone}</a>
       </nav>
-      <p className="credit"><b>NoPhotoShop</b> · By DucAnh</p>
+      <p className="credit"><b>NoPhotoShop</b> · V486 - By DucAnh</p>
       {install && <InstallGuide onClose={() => setInstall(false)} />}
       {privacy && <Privacy onClose={() => setPrivacy(false)} />}
     </footer>
