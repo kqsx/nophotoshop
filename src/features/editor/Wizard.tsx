@@ -37,7 +37,7 @@ export function WizardPanel({ doc, onExit, onExport, onAdd, render }: { doc: Doc
         {i === 0 && (
           <div className="panel-body">
             <p>Đã có <b>{getState().docs.length}</b> ảnh. {doc.analysis && <>Ảnh này là <b>{doc.analysis.orientation === 'doc' ? 'ảnh dọc' : doc.analysis.orientation === 'ngang' ? 'ảnh ngang' : 'ảnh vuông'}</b>{doc.analysis.ratio && <> tỷ lệ <b>{doc.analysis.ratio}</b></>}.</>}</p>
-            <button className="btn lg block" onClick={onAdd}><ImagePlus size={24} /> Thêm ảnh khác</button>
+            <button className="btn lg block" onClick={onAdd}><ImagePlus size={16} /> Thêm ảnh khác</button>
           </div>
         )}
         {s.tab && render(s.tab)}
@@ -56,14 +56,14 @@ export function WizardPanel({ doc, onExit, onExport, onAdd, render }: { doc: Doc
         )}
         {i === STEPS.length - 1 && (
           <div className="panel-body">
-            <button className="btn primary lg block" onClick={onExport}><Download size={24} /> Tải ảnh về</button>
+            <button className="btn primary lg block" onClick={onExport}><Download size={16} /> Tải ảnh về</button>
           </div>
         )}
       </div>
       <div className="wiz-nav">
-        <button className="btn lg" disabled={i === 0} onClick={() => setI(i - 1)}><ChevronLeft size={22} /> Quay lại</button>
+        <button className="btn lg" disabled={i === 0} onClick={() => setI(i - 1)}><ChevronLeft size={14} /> Quay lại</button>
         {i < STEPS.length - 1 ? (
-          <button className="btn primary lg grow" onClick={() => setI(i + 1)}>Tiếp tục <ChevronRight size={22} /></button>
+          <button className="btn primary lg grow" onClick={() => setI(i + 1)}>Tiếp tục <ChevronRight size={14} /></button>
         ) : (
           <button className="btn lg grow" onClick={exit}>Xong · chỉnh tự do</button>
         )}

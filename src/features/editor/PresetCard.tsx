@@ -11,7 +11,7 @@ export function PresetCard({ doc, p, active, onClick, compact }: { doc: Doc; p: 
     <button className={'pcard' + (active ? ' on' : '') + (compact ? ' compact' : '')} onClick={onClick} aria-pressed={active} title={p.desc}>
       <span className="pthumb">
         {url ? <img src={url} alt="" /> : <span className="shimmer" />}
-        <span className={`sq ${p.color}`} style={{ width: 30, height: 30 }}><PresetIcon name={p.icon} size={18} /></span>
+        <span className={`sq ${p.color}`} style={{ width: 20, height: 20 }}><PresetIcon name={p.icon} size={14} /></span>
         {active && <span className="pcheck" aria-hidden>✓</span>}
       </span>
       <span className="pname">{p.name}</span>
@@ -39,7 +39,7 @@ export function ActiveChip({ name, on, onSelect, onRemove }: { name: string; on:
   return (
     <span className={'chip' + (on ? ' on' : '')}>
       <button className="chip-btn" onClick={onSelect}>{name}</button>
-      <button className="chip-x" onClick={onRemove} aria-label={`Bỏ ${name}`}><X size={16} strokeWidth={2} /></button>
+      <button className="chip-x" onClick={onRemove} aria-label={`Bỏ ${name}`}><X size={14} strokeWidth={2} /></button>
     </span>
   );
 }

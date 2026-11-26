@@ -51,7 +51,7 @@ export function AdvancedPanel({ doc, tapMode, setTapMode, healSize, setHealSize 
         </>)}
         {sec === 'Màu' && (<>
           <button className={'btn block' + (tapMode === 'wb' ? ' primary' : '')} onClick={() => setTapMode(tapMode === 'wb' ? null : 'wb')}>
-            <Pipette size={22} strokeWidth={1.75} /> {tapMode === 'wb' ? 'Chạm vào vùng trắng/xám trên ảnh…' : 'Chấm cân bằng trắng'}
+            <Pipette size={14} strokeWidth={1.75} /> {tapMode === 'wb' ? 'Chạm vào vùng trắng/xám trên ảnh…' : 'Chấm cân bằng trắng'}
           </button>
           <ParamSlider doc={doc} k="temp" label="Nhiệt độ màu" gradient="linear-gradient(90deg,#4aa3ff,#e9e9ee 50%,#ffb340)" />
           <ParamSlider doc={doc} k="tint" label="Tint (lục ↔ hồng)" gradient="linear-gradient(90deg,#3ccf6a,#e9e9ee 50%,#e85bd8)" />
@@ -74,12 +74,12 @@ export function AdvancedPanel({ doc, tapMode, setTapMode, healSize, setHealSize 
           <ParamSlider doc={doc} k="skinWarm" label="Tông da (lạnh ↔ ấm)" gradient="linear-gradient(90deg,#e7b9c8,#f2d2bd 50%,#f0b27a)" />
           <div className="divider" />
           <button className={'btn block' + (tapMode === 'heal' ? ' primary' : '')} onClick={() => setTapMode(tapMode === 'heal' ? null : 'heal')}>
-            <Eraser size={22} strokeWidth={1.75} /> {tapMode === 'heal' ? 'Chạm vào mụn/vết trên ảnh để xóa' : 'Chạm để xóa mụn / vật nhỏ'}
+            <Eraser size={14} strokeWidth={1.75} /> {tapMode === 'heal' ? 'Chạm vào mụn/vết trên ảnh để xóa' : 'Chạm để xóa mụn / vật nhỏ'}
           </button>
           {tapMode === 'heal' && <Slider label="Cỡ cọ" value={healSize} min={5} max={80} def={18} onChange={setHealSize} />}
           {doc.cur.manual.heal.length > 0 && (
             <button className="btn sm" onClick={() => edit('Xóa các điểm', (e) => ({ ...e, manual: { ...e.manual, heal: [] } }))}>
-              <Trash2 size={18} /> Bỏ {doc.cur.manual.heal.length} điểm đã xóa
+              <Trash2 size={14} /> Bỏ {doc.cur.manual.heal.length} điểm đã xóa
             </button>
           )}
         </>)}
@@ -89,17 +89,17 @@ export function AdvancedPanel({ doc, tapMode, setTapMode, healSize, setHealSize 
         {sec === 'Công thức' && (
           <div className="stack">
             <p className="muted small">Công thức là cấu hình chỉnh ảnh (không chứa ảnh) — lưu lại, gửi bạn bè hoặc áp cho nhiều ảnh.</p>
-            <button className="btn block" onClick={saveCustom}><Save size={20} /> Lưu thành preset riêng</button>
-            <button className="btn block" onClick={() => { download(new Blob([JSON.stringify(recipeOf(doc), null, 1)], { type: 'application/json' }), 'cong-thuc.nophotoshop.json'); }}><FileDown size={20} /> Xuất file công thức</button>
-            <button className="btn block" onClick={() => fileRef.current?.click()}><FileUp size={20} /> Mở file công thức</button>
+            <button className="btn block" onClick={saveCustom}><Save size={14} /> Lưu thành preset riêng</button>
+            <button className="btn block" onClick={() => { download(new Blob([JSON.stringify(recipeOf(doc), null, 1)], { type: 'application/json' }), 'cong-thuc.nophotoshop.json'); }}><FileDown size={14} /> Xuất file công thức</button>
+            <button className="btn block" onClick={() => fileRef.current?.click()}><FileUp size={14} /> Mở file công thức</button>
             <input ref={fileRef} type="file" accept=".json,application/json" hidden onChange={async (e) => {
               const f = e.target.files?.[0]; e.target.value = '';
               if (!f) return;
               try { applyRecipe(JSON.parse(await f.text())); toast('Đã áp công thức'); } catch (er) { toast((er as Error).message, 'err'); }
             }} />
-            {getState().docs.length > 1 && <button className="btn block" onClick={() => { applyRecipeToAll(); toast('Đã áp cho tất cả ảnh'); }}><Copy size={20} /> Áp cho tất cả {getState().docs.length} ảnh</button>}
+            {getState().docs.length > 1 && <button className="btn block" onClick={() => { applyRecipeToAll(); toast('Đã áp cho tất cả ảnh'); }}><Copy size={14} /> Áp cho tất cả {getState().docs.length} ảnh</button>}
             <CustomList />
-            <button className="btn block danger" onClick={resetAll}><RotateCcw size={20} /> Đặt lại ảnh này</button>
+            <button className="btn block danger" onClick={resetAll}><RotateCcw size={14} /> Đặt lại ảnh này</button>
           </div>
         )}
       </div>
@@ -115,7 +115,7 @@ function CustomList() {
       {list.map((p) => (
         <div key={p.id} className="list-item">
           <span className="grow">{p.name}</span>
-          <button className="icon-btn" aria-label={`Xóa ${p.name}`} onClick={async () => { await delItem('presets', p.id); setCustomPresets(getState().customPresets.filter((x) => x.id !== p.id)); }}><Trash2 size={20} /></button>
+          <button className="icon-btn" aria-label={`Xóa ${p.name}`} onClick={async () => { await delItem('presets', p.id); setCustomPresets(getState().customPresets.filter((x) => x.id !== p.id)); }}><Trash2 size={14} /></button>
         </div>
       ))}
     </div>

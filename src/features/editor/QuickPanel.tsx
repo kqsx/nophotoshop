@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
-import { WandSparkles, SlidersHorizontal, ChevronRight, Sun, Thermometer, Sparkles, Heart, Smile } from 'lucide-react';
+import { SlidersHorizontal, ChevronRight, Sun, Thermometer, Sparkles, Heart, Smile } from 'lucide-react';
 import { Slider } from '../../ui/Slider';
-import { PRESETS, QUICK_ORDER, autoPick, suggest } from '../../presets/presets';
-import { allPresets, commit, findPreset, live, setLut, setPresetStrength, setPresets, setTab, togglePreset, type Doc } from './store';
+import { PRESETS, QUICK_ORDER, suggest } from '../../presets/presets';
+import { allPresets, commit, findPreset, live, setLut, setPresetStrength, setTab, togglePreset, type Doc } from './store';
 import { PresetCard, LutCard, ActiveChip } from './PresetCard';
 import { loadCatalog, type LutItem } from '../../engine/lutStore';
 import { useConfig } from '../../lib/config';
 import type { ScalarKey } from '../../engine/params';
-import { track } from '../../lib/stats';
 
 export function useLuts() {
   const [luts, setLuts] = useState<LutItem[]>([]);
@@ -51,12 +50,6 @@ export function QuickPanel({ doc }: { doc: Doc }) {
 
   return (
     <div className="panel-body">
-      <button
-        className="btn primary lg block"
-        onClick={() => { setPresets(autoPick(doc.analysis), 'Tự động chọn'); track('preset', 'autopick'); }}
-      >
-        <WandSparkles size={26} strokeWidth={1.75} /> Tự động chọn cho tôi
-      </button>
       {tags.length > 0 && <div className="tags">{tags.map((t) => <span key={String(t)} className="tag">{t}</span>)}</div>}
 
       {sugg.length > 0 && (
@@ -91,7 +84,7 @@ export function QuickPanel({ doc }: { doc: Doc }) {
         <>
           <div className="row between">
             <h3 className="sec">Bộ màu LUT</h3>
-            <button className="btn sm ghost" onClick={() => setTab('lut')}>Tất cả <ChevronRight size={18} /></button>
+            <button className="btn sm ghost" onClick={() => setTab('lut')}>Tất cả <ChevronRight size={14} /></button>
           </div>
           <div className="hscroll">
             {luts.slice(0, 10).map((l) => (
@@ -106,15 +99,15 @@ export function QuickPanel({ doc }: { doc: Doc }) {
 
       <h3 className="sec">Tinh chỉnh nhanh</h3>
       <div className="glass card sliders">
-        <ParamSlider doc={doc} k="exposure" label={<><Sun size={20} strokeWidth={1.75} /> Độ sáng</>} />
-        <ParamSlider doc={doc} k="temp" label={<><Thermometer size={20} strokeWidth={1.75} /> Tông màu (lạnh ↔ ấm)</>} gradient="linear-gradient(90deg,#4aa3ff,#e9e9ee 50%,#ffb340)" />
-        <ParamSlider doc={doc} k="smooth" label={<><Sparkles size={20} strokeWidth={1.75} /> Mịn da</>} min={0} fill="var(--pink)" />
-        <ParamSlider doc={doc} k="skinBright" label={<><Smile size={20} strokeWidth={1.75} /> Sáng da</>} min={0} fill="var(--pink)" />
-        <ParamSlider doc={doc} k="skinPink" label={<><Heart size={20} strokeWidth={1.75} /> Hồng da</>} min={0} fill="var(--pink)" />
+        <ParamSlider doc={doc} k="exposure" label={<><Sun size={14} strokeWidth={1.75} /> Độ sáng</>} />
+        <ParamSlider doc={doc} k="temp" label={<><Thermometer size={14} strokeWidth={1.75} /> Tông màu (lạnh ↔ ấm)</>} gradient="linear-gradient(90deg,#4aa3ff,#e9e9ee 50%,#ffb340)" />
+        <ParamSlider doc={doc} k="smooth" label={<><Sparkles size={14} strokeWidth={1.75} /> Mịn da</>} min={0} fill="var(--pink)" />
+        <ParamSlider doc={doc} k="skinBright" label={<><Smile size={14} strokeWidth={1.75} /> Sáng da</>} min={0} fill="var(--pink)" />
+        <ParamSlider doc={doc} k="skinPink" label={<><Heart size={14} strokeWidth={1.75} /> Hồng da</>} min={0} fill="var(--pink)" />
       </div>
 
       <button className="btn lg block adv-btn" onClick={() => setTab('advanced')}>
-        <SlidersHorizontal size={24} strokeWidth={1.75} /> Nâng cao <span className="muted small">HSL · Curves · Da chi tiết · Hiệu ứng</span>
+        <SlidersHorizontal size={16} strokeWidth={1.75} /> Nâng cao <span className="muted small">HSL · Curves · Da chi tiết · Hiệu ứng</span>
       </button>
     </div>
   );

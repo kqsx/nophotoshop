@@ -24,7 +24,7 @@ export function LutPanel({ doc }: { doc: Doc }) {
       )}
       <div className="pgrid">
         <button className={'pcard compact' + (!cur ? ' on' : '')} onClick={() => setLut(null)}>
-          <span className="pthumb none"><CircleOff size={30} strokeWidth={1.5} /></span>
+          <span className="pthumb none"><CircleOff size={20} strokeWidth={1.5} /></span>
           <span className="pname">Không LUT</span>
         </button>
         {shown.map((l) => <LutCard key={l.id} doc={doc} l={l} active={cur?.id === l.id} onClick={() => setLut(cur?.id === l.id ? null : l.id)} />)}

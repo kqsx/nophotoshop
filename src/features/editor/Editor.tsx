@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useRef, useState } from 'react';
 import {
-  ChevronLeft, Undo2, Redo2, Eye, Columns2, History, Download, Sparkles, Palette, SlidersHorizontal, Crop, Stamp, Plus, X, ChartColumn, ChevronUp, ChevronDown,
+  ChevronLeft, RotateCcw, Undo2, Redo2, Eye, Columns2, History, Download, Sparkles, Palette, SlidersHorizontal, Crop, Stamp, Plus, X, ChartColumn, ChevronUp, ChevronDown,
 } from 'lucide-react';
 import { Viewport } from './Viewport';
 import { QuickPanel } from './QuickPanel';
@@ -10,13 +10,15 @@ import { CropPanel } from './CropPanel';
 import { WatermarkPanel } from '../watermark/WatermarkPanel';
 import { ExportDialog } from '../export/ExportDialog';
 import { Modal } from '../../ui/Modal';
-import { addFiles, closeAll, edit, jumpTo, redo, removeDoc, setActive, setSyncAll, setTab, undo, useStore, type Doc, type Tab } from './store';
+import { addFiles, blankEdit, closeAll, edit, resetAll, jumpTo, redo, removeDoc, setActive, setSyncAll, setTab, undo, useStore, type Doc, type Tab } from './store';
 import { Switch } from '../../ui/Modal';
 import { getBlur } from './runtime';
 import { WizardPanel, wizardEnabled } from './Wizard';
 import { toast } from '../../ui/toast';
 import { orientationOf } from '../../analysis/aspect';
 import type { PreviewPipeline } from '../../engine/pipeline';
+
+const BLANK = JSON.stringify(blankEdit());
 
 const TABS: { id: Tab; label: string; icon: typeof Sparkles }[] = [
   { id: 'quick', label: 'Gợi ý', icon: Sparkles },
@@ -101,15 +103,16 @@ export function Editor() {
   return (
     <div className="editor">
       <header className="ed-top glass">
-        <button className="icon-btn" aria-label="Về trang chủ" onClick={() => { if (confirm('Đóng tất cả ảnh và về trang chủ?')) closeAll(); }}><ChevronLeft size={28} strokeWidth={1.75} /></button>
+        <button className="icon-btn" aria-label="Về trang chủ" onClick={() => { if (confirm('Đóng tất cả ảnh và về trang chủ?')) closeAll(); }}><ChevronLeft size={18} strokeWidth={1.75} /></button>
         <div className="ed-title grow">
           <b className="ellipsis">{doc.name}</b>
           <small className="muted">{doc.w}×{doc.h}{doc.analysis?.ratio ? ` · ${doc.analysis.ratio}` : ''}</small>
         </div>
-        <button className="icon-btn" aria-label="Hoàn tác (Ctrl+Z)" disabled={!doc.past.length} onClick={undo}><Undo2 size={24} strokeWidth={1.75} /></button>
-        <button className="icon-btn" aria-label="Làm lại (Ctrl+Shift+Z)" disabled={!doc.future.length} onClick={redo}><Redo2 size={24} strokeWidth={1.75} /></button>
-        <button className="icon-btn hide-sm" aria-label="Lịch sử" onClick={() => setShowHistory(true)}><History size={24} strokeWidth={1.75} /></button>
-        <button className="btn primary sm" onClick={() => setExporting(true)}><Download size={20} /> Xuất</button>
+        <button className="tbtn" aria-label="Trở lại thao tác trước (Ctrl+Z)" title="Trở lại" disabled={!doc.past.length} onClick={undo}><Undo2 size={16} strokeWidth={1.75} /><span>Trở lại</span></button>
+        <button className="tbtn icon-only" aria-label="Làm lại (Ctrl+Shift+Z)" title="Làm lại" disabled={!doc.future.length} onClick={redo}><Redo2 size={16} strokeWidth={1.75} /></button>
+        <button className="tbtn" aria-label="Đưa ảnh về ban đầu" title="Ảnh gốc" disabled={JSON.stringify(doc.cur) === BLANK} onClick={() => { resetAll(); toast('Đã đưa ảnh về ban đầu — bấm Trở lại để hoàn tác'); }}><RotateCcw size={16} strokeWidth={1.75} /><span>Ảnh gốc</span></button>
+        <button className="icon-btn hide-sm" aria-label="Lịch sử" onClick={() => setShowHistory(true)}><History size={16} strokeWidth={1.75} /></button>
+        <button className="btn primary sm" onClick={() => setExporting(true)}><Download size={14} /> Xuất</button>
       </header>
 
       <div className="ed-body">
@@ -132,10 +135,10 @@ export function Editor() {
               onPointerLeave={() => setHoldOrig(false)}
               onContextMenu={(e) => e.preventDefault()}
               aria-label="Giữ để xem ảnh gốc"
-            ><Eye size={20} strokeWidth={1.75} /> Giữ xem gốc</button>
-            <button className={'pill glass' + (split != null ? ' on' : '')} onClick={() => setSplit(split == null ? 0.5 : null)} aria-pressed={split != null}><Columns2 size={20} strokeWidth={1.75} /> Trước/Sau</button>
-            <button className={'pill glass hide-sm' + (hist ? ' on' : '')} onClick={() => setHist(!hist)} aria-pressed={hist} aria-label="Histogram"><ChartColumn size={20} strokeWidth={1.75} /></button>
-            <button className="pill glass show-sm" onClick={() => setShowHistory(true)} aria-label="Lịch sử"><History size={20} strokeWidth={1.75} /></button>
+            ><Eye size={14} strokeWidth={1.75} /> Giữ xem gốc</button>
+            <button className={'pill glass' + (split != null ? ' on' : '')} onClick={() => setSplit(split == null ? 0.5 : null)} aria-pressed={split != null}><Columns2 size={14} strokeWidth={1.75} /> Trước/Sau</button>
+            <button className={'pill glass hide-sm' + (hist ? ' on' : '')} onClick={() => setHist(!hist)} aria-pressed={hist} aria-label="Histogram"><ChartColumn size={14} strokeWidth={1.75} /></button>
+            <button className="pill glass show-sm" onClick={() => setShowHistory(true)} aria-label="Lịch sử"><History size={14} strokeWidth={1.75} /></button>
           </div>
           {hist && <Histogram pipe={pipe.current} rev={doc.rev} />}
           {loading > 0 && <div className="loading-pill glass">Đang mở {loading} ảnh…</div>}
@@ -153,7 +156,7 @@ export function Editor() {
                   {docs.length > 1 && <button className="film-x" aria-label="Bỏ ảnh" onClick={() => removeDoc(d.id)}><X size={14} strokeWidth={2.5} /></button>}
                 </div>
               ))}
-              <button className="film add" onClick={() => fileRef.current?.click()} aria-label="Thêm ảnh"><Plus size={24} strokeWidth={1.75} /></button>
+              <button className="film add" onClick={() => fileRef.current?.click()} aria-label="Thêm ảnh"><Plus size={16} strokeWidth={1.75} /></button>
             </div>
           )}
           <input ref={fileRef} type="file" accept="image/*,.heic,.heif" multiple hidden onChange={(e) => { if (e.target.files) addFiles(e.target.files, (m) => toast(m, 'err')); e.target.value = ''; }} />
@@ -163,12 +166,12 @@ export function Editor() {
         {!wizard && (
           <aside className={'ed-panel glass' + (sheetOpen ? ' open' : '')}>
             <button className="sheet-grab show-sm" onClick={() => setSheetOpen(!sheetOpen)} aria-label={sheetOpen ? 'Thu gọn công cụ' : 'Mở công cụ'}>
-              <span className="grabber" />{sheetOpen ? <ChevronDown size={18} /> : <ChevronUp size={18} />}
+              <span className="grabber" />{sheetOpen ? <ChevronDown size={14} /> : <ChevronUp size={14} />}
             </button>
             <nav className="tabs" role="tablist" aria-label="Công cụ">
               {TABS.map((t) => (
                 <button key={t.id} role="tab" aria-selected={tab === t.id} className={'tab' + (tab === t.id ? ' on' : '')} onClick={() => { setTab(t.id); setSheetOpen(true); }}>
-                  <t.icon size={26} strokeWidth={1.75} fill={tab === t.id ? 'currentColor' : 'none'} fillOpacity={tab === t.id ? 0.18 : 0} />
+                  <t.icon size={17} strokeWidth={1.75} fill={tab === t.id ? 'currentColor' : 'none'} fillOpacity={tab === t.id ? 0.18 : 0} />
                   <span>{t.label}</span>
                 </button>
               ))}

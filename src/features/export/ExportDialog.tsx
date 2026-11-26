@@ -75,12 +75,12 @@ export function ExportDialog({ onClose }: { onClose: () => void }) {
     return (
       <Modal title="Tải ảnh xuống" onClose={onClose}>
         <div className="ask">
-          <span className="sq orange" style={{ width: 64, height: 64 }}><Stamp size={36} strokeWidth={1.75} /></span>
+          <span className="sq orange" style={{ width: 42, height: 42 }}><Stamp size={23} strokeWidth={1.75} /></span>
           <h3>Bạn có muốn đóng dấu (watermark) lên ảnh không?</h3>
           <p className="muted">Thêm tên hoặc logo của bạn để khẳng định bản quyền khi chia sẻ.</p>
           {wm.layers.length > 0 ? (
             <>
-              <button className="btn primary lg block" onClick={() => { setUseWmark(true); setStep('opts'); }}><Stamp size={22} /> Có, đóng dấu ({wm.layers.length} mẫu)</button>
+              <button className="btn primary lg block" onClick={() => { setUseWmark(true); setStep('opts'); }}><Stamp size={14} /> Có, đóng dấu ({wm.layers.length} mẫu)</button>
               <button className="btn lg block" onClick={() => { setUseWmark(false); setStep('opts'); }}>Không, tải ảnh sạch</button>
               <button className="btn ghost block" onClick={() => { onClose(); setTab('watermark'); }}>Chỉnh watermark trước</button>
             </>
@@ -93,7 +93,7 @@ export function ExportDialog({ onClose }: { onClose: () => void }) {
                 onClose();
                 setTab('watermark');
                 toast('Đã thêm watermark — kéo để đặt vị trí rồi bấm Xuất', 'info', { ms: 5000 });
-              }}><Stamp size={22} /> Có, tạo watermark</button>
+              }}><Stamp size={14} /> Có, tạo watermark</button>
               <button className="btn lg block" onClick={() => { setUseWmark(false); setStep('opts'); }}>Không, tải ảnh luôn</button>
             </>
           )}
@@ -129,7 +129,7 @@ export function ExportDialog({ onClose }: { onClose: () => void }) {
         {docs.length > 1 && (
           <div className="field">
             <div className="row between">
-              <span><Images size={18} style={{ verticalAlign: -3 }} /> Chọn ảnh để xuất ({picked.length}/{docs.length})</span>
+              <span><Images size={14} style={{ verticalAlign: -3 }} /> Chọn ảnh để xuất ({picked.length}/{docs.length})</span>
               <button className="btn sm ghost" onClick={() => setPicked(picked.length === docs.length ? [doc.id] : docs.map((d) => d.id))}>{picked.length === docs.length ? 'Chỉ ảnh này' : 'Chọn tất cả'}</button>
             </div>
             <div className="pick-grid">
@@ -156,12 +156,12 @@ export function ExportDialog({ onClose }: { onClose: () => void }) {
         )}
         <div className="list">
           <div className="list-item">
-            <Stamp size={22} strokeWidth={1.75} />
+            <Stamp size={14} strokeWidth={1.75} />
             <div className="grow"><b>Đóng dấu watermark</b><div className="muted small">{wm.layers.length ? `${wm.layers.length} lớp` : 'Chưa có watermark'}</div></div>
             <Switch label="Đóng dấu watermark" checked={useWmark && wm.layers.length > 0} onChange={(v) => { if (v && !wm.layers.length) { onClose(); setTab('watermark'); return; } setUseWmark(v); }} />
           </div>
           <div className="list-item">
-            <ShieldCheck size={22} strokeWidth={1.75} color="var(--green)" />
+            <ShieldCheck size={14} strokeWidth={1.75} color="var(--green)" />
             <div className="grow small muted">Hồ sơ màu sRGB. Thông tin vị trí GPS và EXIF được xóa để bảo vệ riêng tư.</div>
           </div>
         </div>
@@ -169,12 +169,12 @@ export function ExportDialog({ onClose }: { onClose: () => void }) {
         {busy ? (
           <div className="stack">
             <div className="progress" role="progressbar" aria-valuenow={Math.round(busy.p * 100)}><div style={{ width: `${busy.p * 100}%` }} /></div>
-            <div className="row between"><span>{busy.label}</span><button className="btn sm" onClick={() => abort.current?.abort()}><X size={18} /> Hủy</button></div>
+            <div className="row between"><span>{busy.label}</span><button className="btn sm" onClick={() => abort.current?.abort()}><X size={14} /> Hủy</button></div>
           </div>
         ) : (
           <div className="row">
-            <button className="btn primary lg grow" onClick={() => run('download')}><Download size={24} /> {picked.length > 1 && docs.length > 1 ? `Tải ${picked.length} ảnh` : 'Tải xuống'}</button>
-            {'share' in navigator && <button className="btn lg" onClick={() => run('share')} aria-label="Chia sẻ ảnh"><Share size={24} /></button>}
+            <button className="btn primary lg grow" onClick={() => run('download')}><Download size={16} /> {picked.length > 1 && docs.length > 1 ? `Tải ${picked.length} ảnh` : 'Tải xuống'}</button>
+            {'share' in navigator && <button className="btn lg" onClick={() => run('share')} aria-label="Chia sẻ ảnh"><Share size={16} /></button>}
           </div>
         )}
       </div>

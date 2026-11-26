@@ -7,7 +7,9 @@ import { InstallGuide } from '../install/InstallGuide';
 import { Privacy } from './Privacy';
 import { useConfig } from '../../lib/config';
 
-export const appUrl = () => `${location.origin}/`;
+// Link chia sẻ/QR luôn trỏ về tên miền chính (không phụ thuộc bản preview hay localhost)
+export const SITE_URL = ((import.meta.env.VITE_SITE_URL as string | undefined) || 'https://nophotoshop.vercel.app').replace(/\/+$/, '');
+export const appUrl = () => `${SITE_URL}/`;
 const shareUrl = (src: string) => `${appUrl()}?utm_source=${src}`;
 
 async function makeQr(size: number, dark: string, light: string): Promise<HTMLCanvasElement> {

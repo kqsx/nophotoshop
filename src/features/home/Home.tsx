@@ -1,5 +1,5 @@
 import { useMemo, useRef, useState } from 'react';
-import { ImagePlus, Camera, Sparkles, ShieldCheck, Stamp, Download, Smartphone, Palette } from 'lucide-react';
+import { ImagePlus, Camera, ShieldCheck, Smartphone } from 'lucide-react';
 import { addFiles } from '../editor/store';
 import { SAMPLES, sampleFile, sampleThumb } from './samples';
 import { toast } from '../../ui/toast';
@@ -64,20 +64,6 @@ export function Home() {
         </div>
       )}
 
-      <section className="features">
-        {[
-          { i: Sparkles, c: 'pink', t: 'Preset 1 chạm thông minh', d: 'Tự gợi ý theo ảnh: có mặt người, trời, cây, ban đêm, ngược sáng.' },
-          { i: Palette, c: 'purple', t: 'Thư viện LUT màu', d: 'Màu phim, điện ảnh, Hàn Quốc… xem trước bằng chính ảnh của bạn.' },
-          { i: Stamp, c: 'orange', t: 'Đóng dấu chữ & logo', d: 'Kéo thả, đổi cỡ, xoay, lát chống copy. Lưu mẫu dùng lại.' },
-          { i: Download, c: 'blue', t: 'Xuất 4K nét căng', d: 'Xuất theo từng mảnh, ổn định trên điện thoại. Tải ZIP nhiều ảnh.' },
-        ].map((f) => (
-          <div key={f.t} className="feature glass card">
-            <span className={`sq ${f.c}`} style={{ width: 48, height: 48 }}><f.i size={26} strokeWidth={1.75} /></span>
-            <h3>{f.t}</h3>
-            <p className="muted">{f.d}</p>
-          </div>
-        ))}
-      </section>
       <ShareBlock />
       {guide && <InstallGuide onClose={() => setGuide(false)} />}
     </div>

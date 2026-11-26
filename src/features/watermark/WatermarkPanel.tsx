@@ -43,10 +43,10 @@ export function WatermarkPanel({ portrait }: { portrait: boolean }) {
   return (
     <div className="panel-body">
       <div className="tool-row">
-        <button className="tool" onClick={() => add('text')}><Type size={24} strokeWidth={1.75} /><span>Chữ</span></button>
-        <button className="tool" onClick={() => add('logo')}><ImageIcon size={24} strokeWidth={1.75} /><span>Logo</span></button>
-        <button className="tool" onClick={() => add('tile')}><Grid3x3 size={24} strokeWidth={1.75} /><span>Lát kín</span></button>
-        <button className="tool" onClick={() => add('signature')}><Signature size={24} strokeWidth={1.75} /><span>Chữ ký</span></button>
+        <button className="tool" onClick={() => add('text')}><Type size={16} strokeWidth={1.75} /><span>Chữ</span></button>
+        <button className="tool" onClick={() => add('logo')}><ImageIcon size={16} strokeWidth={1.75} /><span>Logo</span></button>
+        <button className="tool" onClick={() => add('tile')}><Grid3x3 size={16} strokeWidth={1.75} /><span>Lát kín</span></button>
+        <button className="tool" onClick={() => add('signature')}><Signature size={16} strokeWidth={1.75} /><span>Chữ ký</span></button>
       </div>
       <input ref={logoRef} type="file" accept="image/png,image/svg+xml,image/webp" hidden onChange={async (e) => {
         const f = e.target.files?.[0]; e.target.value = '';
@@ -74,17 +74,17 @@ export function WatermarkPanel({ portrait }: { portrait: boolean }) {
           {[...st.layers].reverse().map((l) => (
             <div key={l.id} className={'list-item layer' + (l.id === st.selected ? ' sel' : '')} onClick={() => wmSet({ selected: l.id })}>
               <span className="grow ellipsis"><b>{TYPE_LABEL[l.type]}</b> <span className="muted">{l.type === 'logo' ? (l.logo ? '' : '(chưa chọn ảnh)') : l.text}</span></span>
-              <button className="icon-btn" aria-label="Ẩn/hiện" onClick={(e) => { e.stopPropagation(); wmUpdate(l.id, { visible: !l.visible }); }}>{l.visible ? <Eye size={20} /> : <EyeOff size={20} />}</button>
-              <button className="icon-btn" aria-label="Lên lớp trên" onClick={(e) => { e.stopPropagation(); move(l.id, 1); }}><ChevronUp size={20} /></button>
-              <button className="icon-btn" aria-label="Xuống lớp dưới" onClick={(e) => { e.stopPropagation(); move(l.id, -1); }}><ChevronDown size={20} /></button>
-              <button className="icon-btn" aria-label="Khóa" onClick={(e) => { e.stopPropagation(); wmUpdate(l.id, { locked: !l.locked }); }}>{l.locked ? <Lock size={20} /> : <LockOpen size={20} />}</button>
+              <button className="icon-btn" aria-label="Ẩn/hiện" onClick={(e) => { e.stopPropagation(); wmUpdate(l.id, { visible: !l.visible }); }}>{l.visible ? <Eye size={14} /> : <EyeOff size={14} />}</button>
+              <button className="icon-btn" aria-label="Lên lớp trên" onClick={(e) => { e.stopPropagation(); move(l.id, 1); }}><ChevronUp size={14} /></button>
+              <button className="icon-btn" aria-label="Xuống lớp dưới" onClick={(e) => { e.stopPropagation(); move(l.id, -1); }}><ChevronDown size={14} /></button>
+              <button className="icon-btn" aria-label="Khóa" onClick={(e) => { e.stopPropagation(); wmUpdate(l.id, { locked: !l.locked }); }}>{l.locked ? <Lock size={14} /> : <LockOpen size={14} />}</button>
               <button className="icon-btn" aria-label="Nhân đôi" onClick={(e) => {
                 e.stopPropagation();
                 if (st.layers.length >= MAX_LAYERS) return toast(`Tối đa ${MAX_LAYERS} watermark`, 'info');
                 const c = { ...structuredClone(l), id: Math.random().toString(36).slice(2, 9), y: Math.max(0, l.y - 0.1) };
                 wmSet({ layers: [...st.layers, c], selected: c.id });
-              }}><Copy size={20} /></button>
-              <button className="icon-btn" aria-label="Xóa" onClick={(e) => { e.stopPropagation(); const rest = st.layers.filter((x) => x.id !== l.id); wmSet({ layers: rest, selected: rest[rest.length - 1]?.id ?? null }); }}><Trash2 size={20} /></button>
+              }}><Copy size={14} /></button>
+              <button className="icon-btn" aria-label="Xóa" onClick={(e) => { e.stopPropagation(); const rest = st.layers.filter((x) => x.id !== l.id); wmSet({ layers: rest, selected: rest[rest.length - 1]?.id ?? null }); }}><Trash2 size={14} /></button>
             </div>
           ))}
         </div>
@@ -101,8 +101,8 @@ export function WatermarkPanel({ portrait }: { portrait: boolean }) {
                 <select className="input grow" value={sel.font} onChange={(e) => up({ font: e.target.value })} aria-label="Font chữ" style={{ fontFamily: sel.font }}>
                   {FONTS.filter((f) => !getConfig().wmFonts.length || getConfig().wmFonts.includes(f.family)).map((f) => <option key={f.family} value={f.family} style={{ fontFamily: f.family }}>{f.label}</option>)}
                 </select>
-                <button className={'icon-btn' + (sel.bold ? ' on' : '')} aria-label="Đậm" onClick={() => up({ bold: !sel.bold })}><Bold size={22} /></button>
-                <button className={'icon-btn' + (sel.italic ? ' on' : '')} aria-label="Nghiêng" onClick={() => up({ italic: !sel.italic })}><Italic size={22} /></button>
+                <button className={'icon-btn' + (sel.bold ? ' on' : '')} aria-label="Đậm" onClick={() => up({ bold: !sel.bold })}><Bold size={14} /></button>
+                <button className={'icon-btn' + (sel.italic ? ' on' : '')} aria-label="Nghiêng" onClick={() => up({ italic: !sel.italic })}><Italic size={14} /></button>
                 <input type="color" className="color" value={sel.color} onChange={(e) => up({ color: e.target.value })} aria-label="Màu chữ" />
               </div>
               <div className="row wrap small">
@@ -116,7 +116,7 @@ export function WatermarkPanel({ portrait }: { portrait: boolean }) {
           )}
           {sel.type === 'logo' && (
             <>
-              <button className="btn block" onClick={() => logoRef.current?.click()}><ImageIcon size={20} /> {sel.logo ? 'Đổi logo' : 'Chọn logo (PNG/SVG/WebP)'}</button>
+              <button className="btn block" onClick={() => logoRef.current?.click()}><ImageIcon size={14} /> {sel.logo ? 'Đổi logo' : 'Chọn logo (PNG/SVG/WebP)'}</button>
               <div className="seg">
                 {(['none', 'white', 'black'] as const).map((t) => <button key={t} className={sel.tint === t ? 'on' : ''} onClick={() => up({ tint: t })}>{t === 'none' ? 'Màu gốc' : t === 'white' ? 'Trắng' : 'Đen'}</button>)}
               </div>
@@ -157,7 +157,7 @@ export function WatermarkPanel({ portrait }: { portrait: boolean }) {
           await putItem('wmTemplates', t);
           setTpls([...tpls, t]);
           toast('Đã lưu mẫu');
-        }}><Save size={18} /> Lưu mẫu</button>
+        }}><Save size={14} /> Lưu mẫu</button>
         {tpls.map((t) => (
           <span key={t.id} className="chip">
             <button className="chip-btn" onClick={() => wmSet({ layers: structuredClone(t.layers), selected: t.layers[0]?.id ?? null })}>{t.name}</button>

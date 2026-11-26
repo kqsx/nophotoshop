@@ -58,11 +58,11 @@ export function CropPanel({ doc }: { doc: Doc }) {
         <Slider label="Cân thẳng (Straighten)" value={g.straighten} min={-45} max={45} step={0.5} def={0} unit="°" onChange={(v) => setG({ straighten: v })} onCommit={() => commit('Cân thẳng')} />
       </div>
       <div className="tool-row">
-        <button className="tool" onClick={() => setG({ rot90: ((g.rot90 + 3) % 4) as Geometry['rot90'] }, 'Xoay trái')}><RotateCcw size={24} strokeWidth={1.75} /><span>Xoay trái</span></button>
-        <button className="tool" onClick={() => setG({ rot90: ((g.rot90 + 1) % 4) as Geometry['rot90'] }, 'Xoay phải')}><RotateCw size={24} strokeWidth={1.75} /><span>Xoay phải</span></button>
-        <button className="tool" onClick={() => setG({ flipH: !g.flipH }, 'Lật ngang')}><FlipHorizontal2 size={24} strokeWidth={1.75} /><span>Lật ngang</span></button>
-        <button className="tool" onClick={() => setG({ flipV: !g.flipV }, 'Lật dọc')}><FlipVertical2 size={24} strokeWidth={1.75} /><span>Lật dọc</span></button>
-        <button className="tool" onClick={() => edit('Bỏ cắt', (e) => ({ ...e, geometry: defaultGeometry() }))}><Undo2 size={24} strokeWidth={1.75} /><span>Bỏ cắt</span></button>
+        <button className="tool" onClick={() => setG({ rot90: ((g.rot90 + 3) % 4) as Geometry['rot90'] }, 'Xoay trái')}><RotateCcw size={16} strokeWidth={1.75} /><span>Xoay trái</span></button>
+        <button className="tool" onClick={() => setG({ rot90: ((g.rot90 + 1) % 4) as Geometry['rot90'] }, 'Xoay phải')}><RotateCw size={16} strokeWidth={1.75} /><span>Xoay phải</span></button>
+        <button className="tool" onClick={() => setG({ flipH: !g.flipH }, 'Lật ngang')}><FlipHorizontal2 size={16} strokeWidth={1.75} /><span>Lật ngang</span></button>
+        <button className="tool" onClick={() => setG({ flipV: !g.flipV }, 'Lật dọc')}><FlipVertical2 size={16} strokeWidth={1.75} /><span>Lật dọc</span></button>
+        <button className="tool" onClick={() => edit('Bỏ cắt', (e) => ({ ...e, geometry: defaultGeometry() }))}><Undo2 size={16} strokeWidth={1.75} /><span>Bỏ cắt</span></button>
       </div>
     </div>
   );
