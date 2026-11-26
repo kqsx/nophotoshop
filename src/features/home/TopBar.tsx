@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { Settings, SunMoon } from 'lucide-react';
 import { setTheme, useTheme } from '../../ui/theme';
 import { SettingsSheet } from './SettingsSheet';
-import { useConfig } from '../../lib/config';
 
 export function Logo({ size = 36 }: { size?: number }) {
   return (
@@ -25,16 +24,12 @@ export function Logo({ size = 36 }: { size?: number }) {
 export function TopBar() {
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const cfg = useConfig();
   const next = theme === 'system' ? (document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark') : theme === 'dark' ? 'light' : 'dark';
   return (
     <header className="topbar">
-      <a className="brand" href="/" aria-label={`${cfg.appName} ${cfg.author}`}>
+      <a className="brand" href="/" aria-label="NoPhotoShop">
         <Logo />
-        <span>
-          <b>{cfg.appName}</b>
-          <small>{cfg.author}</small>
-        </span>
+        <b>NoPhotoShop</b>
       </a>
       <div className="row" style={{ gap: 4 }}>
         <button className="icon-btn" aria-label="Đổi sáng/tối" onClick={() => setTheme(next)}><SunMoon size={24} strokeWidth={1.75} /></button>

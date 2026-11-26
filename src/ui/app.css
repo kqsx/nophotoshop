@@ -304,3 +304,37 @@ input[type='range']::-webkit-slider-thumb { width: 18px; height: 18px; margin-to
 input[type='range']::-moz-range-thumb { width: 18px; height: 18px; }
 .sliders { padding: 4px 12px 6px; }
 @media (max-width: 999px) { .ed-title small { display: none; } }
+
+/* ===== v4: trang chủ gọn — khối chia sẻ vừa phải ===== */
+.brand b { font-size: 19px; }
+.footer { padding: 16px 16px calc(16px + env(safe-area-inset-bottom)); max-width: 560px; }
+.share-card { padding: 14px 16px; }
+.share-main { flex-wrap: nowrap; gap: 14px; align-items: center; justify-content: space-between; }
+.share-main .grow { display: grid; gap: 8px; min-width: 0; }
+.share-actions { display: grid; grid-template-columns: 1fr 1fr; gap: 6px; }
+.share-actions .btn { min-height: 34px; font-size: 14px; padding: 0 10px; gap: 5px; }
+.social { margin: 0; gap: 6px; display: grid !important; grid-template-columns: repeat(3, 1fr); }
+.social-btn { min-height: 30px; padding: 0 8px; font-size: 13px; justify-content: center; }
+.qr-box { gap: 6px; flex: none; }
+.qr { width: 112px; height: 112px; border-radius: 14px; padding: 4px; }
+.qr canvas { width: 104px !important; height: 104px !important; }
+.qr-box .btn.sm { min-height: 28px; font-size: 12px; padding: 0 10px; gap: 4px; }
+.footer-links { margin: 10px 0 4px; gap: 2px; }
+.footer-links .btn { font-size: 14px; min-height: 34px; padding: 0 10px; gap: 5px; }
+.footer-links .btn svg { width: 16px; height: 16px; }
+.credit { font-size: 13px; color: var(--text-2); }
+@media (max-width: 380px) { .social { grid-template-columns: repeat(2, 1fr); } .qr { width: 96px; height: 96px; } .qr canvas { width: 88px !important; height: 88px !important; } }
+
+/* Cài đặt: luôn hiện đủ, cuộn được, có nút đóng */
+.modal .list-item { gap: 10px; }
+.modal .list-item .small { white-space: normal; }
+.share-actions { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+.social { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+.social-btn, .share-actions .btn { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.share-actions .btn svg { width: 15px; height: 15px; flex: none; }
+@media (max-width: 520px) {
+  .share-main { gap: 10px; }
+  .share-actions .btn { font-size: 13px; padding: 0 6px; }
+  .social-btn { font-size: 12px; padding: 0 4px; }
+  .qr { width: 96px; height: 96px; } .qr canvas { width: 88px !important; height: 88px !important; }
+}

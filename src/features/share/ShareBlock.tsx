@@ -72,7 +72,6 @@ export function ShareBlock() {
     a.click();
   };
   const u = encodeURIComponent(shareUrl('social'));
-  const txt = encodeURIComponent('Chỉnh ảnh đẹp 1 chạm với NoPhotoShop');
   const copyThen = async (href: string, src: string) => {
     track('share', src);
     try { await navigator.clipboard.writeText(shareUrl(src)); toast('Đã sao chép link — dán vào khung chat'); } catch { /* ignore */ }
@@ -83,26 +82,19 @@ export function ShareBlock() {
       <section className="share-card glass card">
         <div className="share-main">
           <div className="grow">
-            <h2>Chia sẻ NoPhotoShop</h2>
-            <p className="muted">Gửi cho bạn bè, khách hàng, người thân — quét QR để mở ngay.</p>
-            <div className="row wrap" style={{ marginTop: 14 }}>
-              <button className="btn primary" onClick={shareLink}><Share size={22} strokeWidth={1.75} /> Chia sẻ link</button>
-              <button className="btn" onClick={async () => { await navigator.clipboard.writeText(shareUrl('copy')); toast('Đã sao chép'); }}><Link2 size={22} strokeWidth={1.75} /> Sao chép</button>
+            <div className="share-actions">
+              <button className="btn sm primary" onClick={shareLink}><Share size={16} strokeWidth={1.75} /> Chia sẻ link</button>
+              <button className="btn sm" onClick={async () => { await navigator.clipboard.writeText(shareUrl('copy')); toast('Đã sao chép'); }}><Link2 size={16} strokeWidth={1.75} /> Sao chép</button>
             </div>
             <div className="social row wrap">
               <button className="social-btn zalo" onClick={() => copyThen('https://chat.zalo.me/', 'zalo')}>Zalo</button>
               <a className="social-btn fb" href={`https://www.facebook.com/sharer/sharer.php?u=${u}`} target="_blank" rel="noopener noreferrer" onClick={() => track('share', 'facebook')}>Facebook</a>
               <a className="social-btn ms" href={`fb-messenger://share/?link=${u}`} onClick={() => track('share', 'messenger')}>Messenger</a>
-              <a className="social-btn tg" href={`https://t.me/share/url?url=${u}&text=${txt}`} target="_blank" rel="noopener noreferrer" onClick={() => track('share', 'telegram')}>Telegram</a>
-              <a className="social-btn x" href={`https://twitter.com/intent/tweet?url=${u}&text=${txt}`} target="_blank" rel="noopener noreferrer" onClick={() => track('share', 'x')}>X</a>
             </div>
           </div>
           <div className="qr-box">
-            <div ref={ref} className="qr"><QrCode size={48} /></div>
-            <div className="row" style={{ gap: 6 }}>
-              <button className="btn sm" onClick={() => dlQr('png')}><Download size={18} /> PNG</button>
-              <button className="btn sm" onClick={() => dlQr('svg')}><Download size={18} /> SVG</button>
-            </div>
+            <div ref={ref} className="qr"><QrCode size={32} /></div>
+            <button className="btn sm" onClick={() => dlQr('png')}><Download size={14} /> Tải QR</button>
           </div>
         </div>
       </section>
@@ -112,11 +104,7 @@ export function ShareBlock() {
         <a className="btn ghost" href={`https://zalo.me/${cfg.phone}`} target="_blank" rel="noopener noreferrer"><MessageCircle size={20} strokeWidth={1.75} /> Zalo</a>
         <a className="btn ghost" href={`tel:${cfg.phone}`}><Phone size={20} strokeWidth={1.75} /> {cfg.phone}</a>
       </nav>
-      <p className="credit">
-        <b>{cfg.appName}</b> · {cfg.author} · Phone/Zalo {cfg.phone}
-        {cfg.footer && <><br />{cfg.footer}</>}
-        <br /><span className="muted small">Ảnh của bạn không bao giờ rời khỏi máy.</span>
-      </p>
+      <p className="credit"><b>NoPhotoShop</b> · By DucAnh</p>
       {install && <InstallGuide onClose={() => setInstall(false)} />}
       {privacy && <Privacy onClose={() => setPrivacy(false)} />}
     </footer>

@@ -1,5 +1,6 @@
 import { useEffect, type ReactNode } from 'react';
 import { X } from 'lucide-react';
+import { createPortal } from 'react-dom';
 
 export function Modal({ title, onClose, children, wide }: { title: ReactNode; onClose: () => void; children: ReactNode; wide?: boolean }) {
   useEffect(() => {
@@ -7,7 +8,8 @@ export function Modal({ title, onClose, children, wide }: { title: ReactNode; on
     addEventListener('keydown', k);
     return () => removeEventListener('keydown', k);
   }, [onClose]);
-  return (
+  // Portal ra body: tránh bị khung cha (thanh trên có hiệu ứng mờ) cắt mất nội dung
+  return createPortal(
     <div className="backdrop" onClick={onClose}>
       <div className="modal" role="dialog" aria-modal="true" aria-label={typeof title === 'string' ? title : undefined} onClick={(e) => e.stopPropagation()} style={wide ? { width: 'min(100%, 760px)' } : undefined}>
         <div className="grabber" />
@@ -17,7 +19,8 @@ export function Modal({ title, onClose, children, wide }: { title: ReactNode; on
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 

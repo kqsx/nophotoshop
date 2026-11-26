@@ -9,7 +9,7 @@ type Row = { bucket: string; visit: number; image: number; export: number; prese
 interface Resp { series: Row[]; totals: Record<string, number>; top: Record<'presets' | 'luts' | 'devices' | 'sources' | 'formats', [string, number][]>; from: string; to: string }
 
 const METRICS: { k: keyof Row; label: string; color: string }[] = [
-  { k: 'visit', label: 'Lượt truy cập', color: '#0a84ff' },
+  { k: 'visit', label: 'Lượt xem', color: '#0a84ff' },
   { k: 'image', label: 'Ảnh mở', color: '#bf5af2' },
   { k: 'export', label: 'Ảnh xuất', color: '#30d158' },
   { k: 'preset', label: 'Lượt dùng preset', color: '#ff375f' },

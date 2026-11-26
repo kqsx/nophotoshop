@@ -37,7 +37,8 @@ export function SettingsSheet({ onClose }: { onClose: () => void }) {
             <button className="btn sm danger" onClick={async () => { if (!confirmWipe()) return; await wipeAll(); toast('Đã dọn sạch'); setTimeout(() => location.reload(), 600); }}>Xóa</button>
           </div>
         </div>
-        <p className="muted small">NoPhotoShop By DucAnh · v1.0 · Phone/Zalo 0904817613</p>
+        <button className="btn block" onClick={onClose}>Đóng</button>
+        <p className="muted small" style={{ textAlign: 'center', margin: 0 }}>NoPhotoShop · By DucAnh · v1.0</p>
       </div>
     </Modal>
   );
